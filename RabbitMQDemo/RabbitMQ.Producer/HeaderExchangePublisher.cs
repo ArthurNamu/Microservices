@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace RabbitMQ.Producer
 {
-    public class TopicExchangePublisher
+    public static class HeaderExchangePublisher
     {
         public static void Publish(IModel channel)
         {
@@ -16,18 +16,22 @@ namespace RabbitMQ.Producer
                 {"x-message-ttl", 30000 }
             };
 
-            channel.ExchangeDeclare("demo-topic-exchange", ExchangeType.Topic, arguments: ttl);
+            channel.ExchangeDeclare("demo-header-exchange", ExchangeType.Headers, arguments: ttl);
             var count = 0;
             while (true)
             {
                 var message = new { Name = "Producer", Message = $"Hallo! count: {count}" };
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
-                channel.BasicPublish("demo-topic-exchange", "account.new", null, body);
+                var properties = channel.CreateBasicProperties();
+                properties.Headers = new Dictionary<string, object> { { "account", "new" } };
+
+                channel.BasicPublish("demo-header-exchange", string.Empty, properties, body);
                 count++;
                 Thread.Sleep(1000);
             }
 
-       }
+        }
+
     }
 }

@@ -17,7 +17,7 @@ namespace RabbitMQ.Consumer
             };
             var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            TopicExchangeConsumer.Consume(channel);
+            FanoutExchangeConsumer.Consume(channel);
           
 
             Console.ReadLine();

@@ -26,4 +26,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties dockerfile__JsonSchema="https://blockprotocol.org/schemas/block-metadata.json" /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -26,7 +26,7 @@ public class PlatformController : ControllerBase
 
         var platformItems = _repository.GetAllPlatforms();
 
-        if(!platformItems.Any())
+        if(platformItems.Any())
          return Ok(_mapper.Map<IEnumerable<PlatformReadDtos>>(platformItems));
 
         return NotFound();

@@ -7,6 +7,10 @@ namespace PlatformService.Data
     {
         public AppDBContext(DbContextOptions<AppDBContext> opt): base(opt)
         { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(ConnectionService.connstring);
+        }
         public DbSet<Platform> Platforms { get; set; }
     }
 }

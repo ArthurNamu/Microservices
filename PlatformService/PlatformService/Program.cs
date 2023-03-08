@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PlatformService.Data;
 using PlatformService.SyncDataServices.Http;
 using Microsoft.Extensions.Configuration;
+using PlatformService.AsyncDataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +20,15 @@ ConnectionService.Set(configuration);
 
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
+
 //if (env.IsProduction())
 //{
     Console.WriteLine("--> Using SQL Server DB");
 
     builder.Services.AddDbContext<AppDBContext>(opt =>
     opt.UseSqlServer(configuration.GetConnectionString("PlatformsConn")));
+
 //}
 //else
 //{
